@@ -10,7 +10,6 @@ import (
 type CustomError struct {
 	Field   string `json:"field"`
 	Message string `json:"message"`
-	// Value   string `json:"value,omitempty"`
 }
 
 //createCustomError function to creates a new CustomError

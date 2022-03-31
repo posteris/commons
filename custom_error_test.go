@@ -15,7 +15,7 @@ type Contact struct {
 
 type User struct {
 	ID       string
-	FullName string    `validate:"required,min=6,max=256" trans:"Full Name"`
+	FullName string    `validate:"required,min=6,max=256"`
 	Contact  []Contact `validate:"gt=0,dive"`
 	IsActive bool
 }
@@ -83,6 +83,34 @@ func Test_createCustomError_complete_error(t *testing.T) {
 		expected := &CustomError{
 			Field:   "User.Contact[0].Email",
 			Message: "Field validation for 'Email' failed on the 'email' tag",
+		}
+
+		if customError != nil {
+			assert.Equal(t, expected, customError)
+		}
+	}
+}
+
+func Test_createCustomError_name_error(t *testing.T) {
+	v := validator.New()
+
+	user := User{
+		// FullName: "João da Silva",
+		Contact: []Contact{
+			{
+				Type:  "personal",
+				Email: "email@gmail.com",
+			},
+		},
+	}
+	err := v.Struct(user)
+
+	for _, errElement := range err.(validator.ValidationErrors) {
+		customError := createCustomError(errElement)
+
+		expected := &CustomError{
+			Field:   "User.FullName",
+			Message: "Field validation for 'FullName' failed on the 'required' tag",
 		}
 
 		if customError != nil {
