@@ -1,10 +1,25 @@
 package validate
 
 import (
+	"github.com/go-playground/locales/en"
+	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
+	en_translations "github.com/go-playground/validator/v10/translations/en"
 )
 
 var validate = validator.New()
+
+func getTranslator() ut.Translator {
+	english := en.New()
+	uni := ut.New(english, english)
+	trans, _ := uni.GetTranslator("en")
+
+	_ = en_translations.RegisterDefaultTranslations(validate, trans)
+
+	return trans
+}
+
+var translate = getTranslator()
 
 //createErrorArray function to create an CustomError array based on an
 //error received by parameter

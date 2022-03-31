@@ -81,9 +81,8 @@ func Test_createCustomError_complete_error(t *testing.T) {
 		customError := createCustomError(errElement)
 
 		expected := &CustomError{
-			Field: "User.Contact[0].Email",
-			Tag:   "email",
-			Value: "",
+			Field:   "User.Contact[0].Email",
+			Message: "Field validation for 'Email' failed on the 'email' tag",
 		}
 
 		if customError != nil {
