@@ -1,4 +1,4 @@
-package commons
+package errors
 
 type DefaultError struct {
 	Message string `json:"message"`

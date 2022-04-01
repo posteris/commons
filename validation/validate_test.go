@@ -1,9 +1,17 @@
-package commons
+package validation
 
 import (
 	"reflect"
 	"testing"
+
+	"github.com/posteris/custom-validate/errors"
 )
+
+type User struct {
+	Name    string `validate:"required,min=3,max=256"`
+	Surname string `validate:"required,min=3,max=256"`
+	Email   string `validate:"omitempty,email"`
+}
 
 func TestValidateModel(t *testing.T) {
 	type args struct {
@@ -12,42 +20,42 @@ func TestValidateModel(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want []ValidationError
+		want []errors.ValidationError
 	}{
 		{
 			name: "nil-model",
 			args: args{model: nil},
-			want: []ValidationError{},
+			want: []errors.ValidationError{},
 		},
 		{
 			name: "all-in",
 			args: args{model: User{Name: "João", Surname: "da Silva", Email: "dasilva@gmail.com"}},
-			want: []ValidationError{},
+			want: []errors.ValidationError{},
 		},
 		{
 			name: "no-name",
 			args: args{model: User{Surname: "da Silva", Email: "dasilva@gmail.com"}},
-			want: []ValidationError{{Field: "User.Name", Message: "Name is a required field"}},
+			want: []errors.ValidationError{{Field: "User.Name", Message: "Name is a required field"}},
 		},
 		{
 			name: "no-surname",
 			args: args{model: User{Name: "João", Email: "dasilva@gmail.com"}},
-			want: []ValidationError{{Field: "User.Surname", Message: "Surname is a required field"}},
+			want: []errors.ValidationError{{Field: "User.Surname", Message: "Surname is a required field"}},
 		},
 		{
 			name: "no-email",
 			args: args{model: User{Name: "João", Surname: "da Silva"}},
-			want: []ValidationError{},
+			want: []errors.ValidationError{},
 		},
 		{
 			name: "invalid-email",
 			args: args{model: User{Name: "João", Surname: "da Silva", Email: "not-email"}},
-			want: []ValidationError{{Field: "User.Email", Message: "Email must be a valid email address"}},
+			want: []errors.ValidationError{{Field: "User.Email", Message: "Email must be a valid email address"}},
 		},
 		{
 			name: "invalid-email-&-short-name",
 			args: args{model: User{Name: "Jo", Surname: "da Silva", Email: "not-email"}},
-			want: []ValidationError{{Field: "User.Name", Message: "Name must be at least 3 characters in length"}, {Field: "User.Email", Message: "Email must be a valid email address"}},
+			want: []errors.ValidationError{{Field: "User.Name", Message: "Name must be at least 3 characters in length"}, {Field: "User.Email", Message: "Email must be a valid email address"}},
 		},
 	}
 
