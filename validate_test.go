@@ -1,72 +1,61 @@
-package validate
+package commons
 
 import (
+	"reflect"
 	"testing"
-
-	"github.com/go-playground/validator/v10"
-	"github.com/stretchr/testify/assert"
 )
 
-func Test_createErrorArray(t *testing.T) {
-	v := validator.New()
-
-	user := User{}
-	err := v.Struct(user)
-
-	errorArray := createErrorArray(err)
-
-	assert.Equal(t, 2, len(errorArray))
-}
-
-func TestRun(t *testing.T) {
-	errors := Run(nil)
-
-	assert.Nil(t, errors)
-}
-
-func TestRun_no_errors(t *testing.T) {
-	user := User{
-		FullName: "João da Silva",
-		Contact: []Contact{
-			{
-				Type:  "personal",
-				Email: "test@gmail.com",
-			},
+func TestValidateModel(t *testing.T) {
+	type args struct {
+		model interface{}
+	}
+	tests := []struct {
+		name string
+		args args
+		want []ValidationError
+	}{
+		{
+			name: "nil-model",
+			args: args{model: nil},
+			want: []ValidationError{},
+		},
+		{
+			name: "all-in",
+			args: args{model: User{Name: "João", Surname: "da Silva", Email: "dasilva@gmail.com"}},
+			want: []ValidationError{},
+		},
+		{
+			name: "no-name",
+			args: args{model: User{Surname: "da Silva", Email: "dasilva@gmail.com"}},
+			want: []ValidationError{{Field: "User.Name", Message: "Name is a required field"}},
+		},
+		{
+			name: "no-surname",
+			args: args{model: User{Name: "João", Email: "dasilva@gmail.com"}},
+			want: []ValidationError{{Field: "User.Surname", Message: "Surname is a required field"}},
+		},
+		{
+			name: "no-email",
+			args: args{model: User{Name: "João", Surname: "da Silva"}},
+			want: []ValidationError{},
+		},
+		{
+			name: "invalid-email",
+			args: args{model: User{Name: "João", Surname: "da Silva", Email: "not-email"}},
+			want: []ValidationError{{Field: "User.Email", Message: "Email must be a valid email address"}},
+		},
+		{
+			name: "invalid-email-&-short-name",
+			args: args{model: User{Name: "Jo", Surname: "da Silva", Email: "not-email"}},
+			want: []ValidationError{{Field: "User.Name", Message: "Name must be at least 3 characters in length"}, {Field: "User.Email", Message: "Email must be a valid email address"}},
 		},
 	}
 
-	errors := Run(user)
-
-	assert.Nil(t, errors)
-}
-
-func TestRun_no_email_error(t *testing.T) {
-	user := User{
-		FullName: "João da Silva",
-		Contact: []Contact{
-			{
-				Type:  "personal",
-				Email: "not-email",
-			},
-		},
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ValidateModel(tt.args.model); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ValidateModel() = %v, want %v", got, tt.want)
+			}
+		})
 	}
-
-	errors := Run(user)
-
-	assert.Equal(t, 1, len(errors))
-}
-
-func TestRun_no_2_errors(t *testing.T) {
-	user := User{
-		FullName: "João da Silva",
-		Contact: []Contact{
-			{
-				Type: "personal",
-			},
-		},
-	}
-
-	errors := Run(user)
-
-	assert.Equal(t, 2, len(errors))
 }
