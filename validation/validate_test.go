@@ -25,12 +25,12 @@ func TestValidateModel(t *testing.T) {
 		{
 			name: "nil-model",
 			args: args{model: nil},
-			want: []errors.ValidationError{},
+			want: nil,
 		},
 		{
 			name: "all-in",
 			args: args{model: User{Name: "João", Surname: "da Silva", Email: "dasilva@gmail.com"}},
-			want: []errors.ValidationError{},
+			want: nil,
 		},
 		{
 			name: "no-name",
@@ -45,7 +45,7 @@ func TestValidateModel(t *testing.T) {
 		{
 			name: "no-email",
 			args: args{model: User{Name: "João", Surname: "da Silva"}},
-			want: []errors.ValidationError{},
+			want: nil,
 		},
 		{
 			name: "invalid-email",

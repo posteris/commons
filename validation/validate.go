@@ -10,6 +10,7 @@ import (
 
 var validate = validator.New()
 
+//createTranslator function that obtain the translation
 func createTranslator() ut.Translator {
 	english := en.New()
 	uni := ut.New(english, english)
@@ -40,11 +41,11 @@ func createErrorArray(err error) []errors.ValidationError {
 	return errorArray
 }
 
-//Run function to perform the struct validate. This function returns an array
-//or errors or nil.
+//Run function to perform the struct validation. This function returns an error
+//array nil.
 func ValidateModel(model interface{}) []errors.ValidationError {
 	if model == nil {
-		return []errors.ValidationError{}
+		return nil
 	}
 
 	err := validate.Struct(model)
@@ -57,5 +58,5 @@ func ValidateModel(model interface{}) []errors.ValidationError {
 		}
 	}
 
-	return []errors.ValidationError{}
+	return nil
 }
