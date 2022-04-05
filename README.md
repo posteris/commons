@@ -54,3 +54,16 @@ import commom "github.com/posteris/commons/errors"
 
 err := commom.CreateValidationError("field-name", "some error message")
 ```
+
+## Query Parameter
+
+Set of functions to operate over query parameter
+
+### IsAsyncRequest
+
+check if the async parameter is sent as query parameter
+
+```go
+async := IsAsyncRequest(fiberCtx)
+
+```
