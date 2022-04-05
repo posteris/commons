@@ -7,7 +7,7 @@ import (
 )
 
 //BodyParser
-func BodyParser(model *interface{}, c *fiber.Ctx) error {
+func BodyParser(model interface{}, c *fiber.Ctx) error {
 	if err := c.BodyParser(model); err != nil {
 		return c.Status(fiber.StatusUnsupportedMediaType).JSON(
 			errors.CreateDefaultError(err.Error()),
