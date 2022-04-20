@@ -58,15 +58,15 @@ err := commom.CreateValidationError("field-name", "some error message")
 
 ## Query Parameter
 
-Set of functions to operate over query parameter
+The Query parameter module has a set of functions to help us to parse query parameters. These functions are listed below:
 
-### IsAsyncRequest
+* __IsAsyncRequest__
 
-check if the async parameter is sent as query parameter
+
+The __IsAsyncRequest__ allow us to ask if the request should be solved by sync or async way. It's simple to use and can be explained below
 
 ```go
 async := IsAsyncRequest(fiberCtx)
-
 ```
 
 ## Software Quality
