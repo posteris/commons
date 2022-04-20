@@ -1,6 +1,8 @@
 package validation
 
 import (
+	errs "errors"
+
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
@@ -26,7 +28,10 @@ func createTranslator() ut.Translator {
 func createErrorArray(err error) []errors.ValidationError {
 	var errorArray []errors.ValidationError
 
-	for _, errElement := range err.(validator.ValidationErrors) {
+	var validationErrors validator.ValidationErrors
+	errs.As(err, &validationErrors)
+
+	for _, errElement := range validationErrors {
 		translator := createTranslator()
 
 		customError := errors.CreateValidationError(

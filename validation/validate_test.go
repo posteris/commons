@@ -55,7 +55,16 @@ func TestValidateModel(t *testing.T) {
 		{
 			name: "invalid-email-&-short-name",
 			args: args{model: User{Name: "Jo", Surname: "da Silva", Email: "not-email"}},
-			want: []errors.ValidationError{{Field: "User.Name", Message: "Name must be at least 3 characters in length"}, {Field: "User.Email", Message: "Email must be a valid email address"}},
+			want: []errors.ValidationError{
+				{
+					Field:   "User.Name",
+					Message: "Name must be at least 3 characters in length",
+				},
+				{
+					Field:   "User.Email",
+					Message: "Email must be a valid email address",
+				},
+			},
 		},
 	}
 
