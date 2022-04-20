@@ -35,22 +35,21 @@ err := commom.ValidateModel(userModel)
 
 ## Errors
 
-The error package has 2 possible erros that can be understand bellow.
+in this package you can use the follow two errors:
 
-### DefaultError
+* __DefaultError__
+* __ValidationError__
 
-the default error is user to return to the client a json with just one error message.
+The default error generate an interface containing just one field __Message__.
 
 ```go
 import commom "github.com/posteris/commons/errors"
 
 err := commom.CreateDefaultError("some error message")
 ```
-### ValidationError
 
-The validationError have 2 fields  the are showed bellow:
-* __Field:__ the validated field
-* __Message:__ the error message.
+The validationError is formed by the fields  __Field:__ and __Message:__ and can be created as showed below.
+
 ```go
 import commom "github.com/posteris/commons/errors"
 
