@@ -6,17 +6,13 @@
 [![GitHub release](https://img.shields.io/github/release/posteris/commons.svg)](https://GitHub.com/posteris/commons/releases/)
 
 
-Project dedicated to stadardize somo patterns like erros and validations that can be utils and shared by many others projects.
+Project dedicated to stadardize some patterns like erros and validations that can be utils and shared by many others projects.
 
-The next sessions was dedicated to show how to use each project features.
+The next sessions was dedicated to show how to use each features.
 
 ## Validation
 
-The validation feature, currently have just one feature that is the ValidationModel.
-
-### ValidateModel 
-
-The validation model receives a model (struct) that contains the validation tag. In case of some validation fail the return will be a ValidationError array, other else nil.
+The validation model receives a model (struct) that contains the validation tag, in case of some validation fail the return will be a _ValidationError_ array, other else _nil_.
 
 ```go
 import commom "github.com/posteris/commons/validation"
