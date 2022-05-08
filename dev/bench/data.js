@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650476551108,
+  "lastUpdate": 1652046055270,
   "repoUrl": "https://github.com/posteris/commons",
   "entries": {
     "Benchmark": [
@@ -274,6 +274,66 @@ window.BENCHMARK_DATA = {
           {
             "name": "BenchmarkValidateModel/Error",
             "value": 0.0001355,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n2 procs"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "gsdenys@gmail.com",
+            "name": "Denys G. Santos",
+            "username": "gsdenys"
+          },
+          "committer": {
+            "email": "gsdenys@gmail.com",
+            "name": "Denys G. Santos",
+            "username": "gsdenys"
+          },
+          "distinct": true,
+          "id": "096742151d7890a9f466893209ee583b90cc5ff7",
+          "message": "expose Validation object",
+          "timestamp": "2022-05-08T18:31:29-03:00",
+          "tree_id": "4b68f942b7aafdf64a6b8b3e2ca5cc7925eb43de",
+          "url": "https://github.com/posteris/commons/commit/096742151d7890a9f466893209ee583b90cc5ff7"
+        },
+        "date": 1652046054446,
+        "tool": "go",
+        "benches": [
+          {
+            "name": "BenchmarkCreateDefaultError/with-message",
+            "value": 0.0000039,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n2 procs"
+          },
+          {
+            "name": "BenchmarkCreateDefaultError/without-message",
+            "value": 0.0000021,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n2 procs"
+          },
+          {
+            "name": "BenchmarkCreateValidationError/with-data",
+            "value": 0.0000018,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n2 procs"
+          },
+          {
+            "name": "BenchmarkCreateValidationError/without-data",
+            "value": 0.0000024,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n2 procs"
+          },
+          {
+            "name": "BenchmarkValidateModel/Errorless",
+            "value": 0.0000091,
+            "unit": "ns/op",
+            "extra": "1000000000 times\n2 procs"
+          },
+          {
+            "name": "BenchmarkValidateModel/Error",
+            "value": 0.0001346,
             "unit": "ns/op",
             "extra": "1000000000 times\n2 procs"
           }
