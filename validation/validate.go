@@ -10,7 +10,7 @@ import (
 	"github.com/posteris/custom-validate/errors"
 )
 
-var validate = validator.New()
+var Validate = validator.New()
 
 //createTranslator function that obtain the translation
 func createTranslator() ut.Translator {
@@ -18,7 +18,7 @@ func createTranslator() ut.Translator {
 	uni := ut.New(english, english)
 	trans, _ := uni.GetTranslator("en")
 
-	_ = en_translations.RegisterDefaultTranslations(validate, trans)
+	_ = en_translations.RegisterDefaultTranslations(Validate, trans)
 
 	return trans
 }
@@ -53,7 +53,7 @@ func ValidateModel(model interface{}) []errors.ValidationError {
 		return nil
 	}
 
-	err := validate.Struct(model)
+	err := Validate.Struct(model)
 
 	if err != nil {
 		array := createErrorArray(err)
